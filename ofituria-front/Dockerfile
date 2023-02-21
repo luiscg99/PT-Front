@@ -1,5 +1,5 @@
 #Primera Etapa
-FROM node:10-alpine as build-step
+FROM node:18-alpine as build-step
 
 RUN mkdir -p /app
 
@@ -11,9 +11,8 @@ RUN npm install
 
 COPY . /app
 
-RUN npm run build --prod
+RUN npm run build
 
-#Segunda Etapa
 FROM nginx:1.17.1-alpine
 
 COPY --from=build-step /app/dist/ofituria-front /usr/share/nginx/html
