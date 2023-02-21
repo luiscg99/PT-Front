@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="d-flex flex-row align-items-center">
+    <a class="btn btn-outline-secondary me-4" routerLink="/products-list">
+      Volver
+    </a>
+    <div class="h4 my-4">Editar</div>
+  </div>
+
+  <form [formGroup]="formProduct" class="form">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        formControlName="name"
+      />
+      <div
+        class="invalid-feedback"
+        *ngIf="formProduct.controls['name'].hasError('required')"
+      >
+        Introduce un nombre
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Descripción</label>
+      <input
+        type="text"
+        class="form-control"
+        id="description"
+        name="description"
+        formControlName="description"
+      />
+      <div
+        class="invalid-feedback"
+        *ngIf="formProduct.controls['description'].hasError('required')"
+      >
+        Introduce una descripción
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="price" class="form-label">Precio</label>
+      <input
+        type="text"
+        class="form-control"
+        id="price"
+        name="price"
+        formControlName="price"
+      />
+      <div
+        class="invalid-feedback"
+        *ngIf="formProduct.controls['price'].hasError('required')"
+      >
+        Introduce un precio
+      </div>
+      <div
+        class="invalid-feedback"
+        *ngIf="formProduct.controls['price'].hasError('min')"
+      >
+        Introduce un precio min
+      </div>
+    </div>
+  </form>
+
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    [disabled]="formProduct.invalid"
+    (click)="updateProduct()"
+  >
+    Actualizar producto
+  </button>
+</div>

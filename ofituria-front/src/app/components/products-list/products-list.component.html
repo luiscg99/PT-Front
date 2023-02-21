@@ -1,0 +1,131 @@
+<div class="card"></div>
+
+<div class="container px-3">
+  <div class="text-center h1 py-4">API REST Ofituria</div>
+
+  <div class="text-center py-3">
+    <button
+      class="btn btn-primary"
+      type="button"
+      (click)="open(addProductModal)"
+    >
+      Añadir producto
+    </button>
+  </div>
+
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let product of products">
+        <tr>
+          <th scope="row">{{ product.name }}</th>
+          <td>{{ product.description }}</td>
+          <td>{{ product.price }}€</td>
+          <td  class="d-flex flex-row align-items-center">
+            <button
+              class="btn btn-outline-primary me-1"
+              (click)="viewProduct(product.id)"
+            >
+              Ver
+            </button>
+            <button
+              class="btn btn-outline-secondary me-1"
+              [routerLink]="'/edit-product/' + product.id"
+            >
+              Editar
+            </button>
+            <button
+              class="btn btn-outline-danger"
+              (click)="deleteProduct(product.id)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #addProductModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-add-product">Añadir producto</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formAddProduct" class="form">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          formControlName="name"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="formAddProduct.get('name')!.hasError('required')"
+        >
+          Introduce un nombre
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Descripción</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          name="description"
+          formControlName="description"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="formAddProduct.controls['description'].hasError('required')"
+        >
+          Introduce una descripción
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Precio</label>
+        <input
+          type="text"
+          class="form-control"
+          id="price"
+          name="price"
+          formControlName="price"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="formAddProduct.controls['price'].hasError('required')"
+        >
+          Introduce un precio
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="createProduct()"
+      [disabled]="formAddProduct.invalid"
+    >
+      Añadir Producto
+    </button>
+  </div>
+</ng-template>
